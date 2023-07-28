@@ -4,6 +4,8 @@
     "dictionaryDefinitions": [],
     "dictionaries": [],
     "words": [
+        "NEXTAUTH",
+        "nextjs",
         "superjson",
         "trpc"
     ],
