@@ -6,7 +6,7 @@ export const userRouter = createTRPCRouter({
     .input(
       z.object({
         id: z.string().optional(),
-      })
+      }).optional()
     )
     .query(async ({ ctx, input }) => {
       let id: string;
