@@ -27,7 +27,7 @@ export default function UserInfoPage() {
       <h1 className="text-2xl font-bold">User Info</h1>
 
       <div
-        className="flex flex-col items-center gap-8 rounded-xl border-2 border-[#BD60B7] bg-[#131621] bg-contain bg-bottom bg-no-repeat px-10 py-8"
+        className="flex flex-col items-center gap-8 rounded-xl border-2 border-[#BD60B7] bg-[#131621] bg-contain bg-bottom bg-no-repeat px-10 pt-10 pb-8"
         style={{
           backgroundImage: "url(/bg/card.png)",
         }}
@@ -41,7 +41,7 @@ export default function UserInfoPage() {
           <div>{session.data?.user.name}</div>
         </div>
 
-        <div className="flex flex-col gap-4 max-w-md w-full">
+        <div className="flex flex-col gap-4 max-w-md w-full pb-12">
           <PrimaryProfile />
           <TechStack />
           <ResponseTime />
