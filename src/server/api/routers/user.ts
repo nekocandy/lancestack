@@ -3,10 +3,23 @@ import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
 export const userRouter = createTRPCRouter({
   updateUser: protectedProcedure
-    .input(z.object({ name: z.string() }))
-    .mutation(({ ctx: _ctx, input }) => {
+    .input(
+      z.object({
+        primaryProfile: z.string().optional(),
+        techStack: z.string().optional(),
+        responseTime: z.string().optional(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { id } = ctx.session.user;
+
+      const user = await ctx.prisma.platformUser.update({
+        where: { userId: id },
+        data: input,
+      });
+
       return {
-        name: input.name,
+        userId: user.id,
       };
     }),
 });
