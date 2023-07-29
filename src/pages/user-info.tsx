@@ -1,6 +1,7 @@
 import { type GetServerSideProps } from "next";
 import { useSession } from "next-auth/react";
 import PrimaryProfile from "~/components/UserInfo/PrimaryProfile";
+import ResponseTime from "~/components/UserInfo/ResponseTime";
 import TechStack from "~/components/UserInfo/TechStack";
 import { getServerAuthSession } from "~/server/auth";
 
@@ -43,6 +44,7 @@ export default function UserInfoPage() {
         <div className="flex flex-col gap-4 max-w-md w-full">
           <PrimaryProfile />
           <TechStack />
+          <ResponseTime />
         </div>
       </div>
 
