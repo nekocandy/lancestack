@@ -24,7 +24,7 @@ export default function Home() {
     <div className="mx-auto flex h-full max-w-[100rem] flex-col gap-8">
       <h1 className="text-xl font-bold">Hello {session.data?.user.name}!</h1>
       <div className="grid grid-cols-12 gap-4">
-        <div className="col-span-5 w-full rounded-lg bg-[#242938] p-6">
+        <div className="col-span-7 w-full rounded-lg bg-[#242938] p-6">
           <div className="grid grid-cols-2 gap-4">
             <DetailsCard
               title="Ongoing Projects"
