@@ -30,11 +30,14 @@ export default function UserInfoPage() {
           backgroundImage: "url(/bg/card.png)",
         }}
       >
-        <div className="flex flex-col gap-4 items-center">
-          <img className="h-32 w-32 rounded-full" src={session.data?.user.image ?? "https://pycz.dev/favicon.svg"} alt="" />
+        <div className="flex flex-col items-center gap-4">
+          <img
+            className="h-32 w-32 rounded-full"
+            src={session.data?.user.image ?? "https://pycz.dev/favicon.svg"}
+            alt=""
+          />
           <div>{session.data?.user.name}</div>
         </div>
-
 
         <div>
           <PrimaryProfile />
