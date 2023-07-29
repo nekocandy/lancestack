@@ -57,9 +57,13 @@ export const userRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       const { id } = ctx.session.user;
 
-      const user = await ctx.prisma.platformUser.update({
+      const user = await ctx.prisma.platformUser.upsert({
         where: { userId: id },
-        data: input,
+        update: input,
+        create: {
+          userId: id,
+          ...input,
+        },
       });
 
       return {
