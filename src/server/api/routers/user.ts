@@ -2,6 +2,27 @@ import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
 export const userRouter = createTRPCRouter({
+  get: protectedProcedure
+    .input(
+      z.object({
+        id: z.string().optional(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      let id: string;
+      if (input?.id) {
+        id = input.id;
+      } else {
+        id = ctx.session.user.id;
+      }
+
+      const user = await ctx.prisma.platformUser.findUnique({
+        where: { userId: id },
+      });
+
+      return user;
+    }),
+
   create: protectedProcedure
     .input(
       z.object({
