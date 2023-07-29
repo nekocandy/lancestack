@@ -1,6 +1,7 @@
 import { type GetServerSideProps } from "next";
 import { useSession } from "next-auth/react";
 import PrimaryProfile from "~/components/UserInfo/PrimaryProfile";
+import TechStack from "~/components/UserInfo/TechStack";
 import { getServerAuthSession } from "~/server/auth";
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
@@ -39,8 +40,9 @@ export default function UserInfoPage() {
           <div>{session.data?.user.name}</div>
         </div>
 
-        <div>
+        <div className="flex flex-col gap-4 max-w-md w-full">
           <PrimaryProfile />
+          <TechStack />
         </div>
       </div>
 

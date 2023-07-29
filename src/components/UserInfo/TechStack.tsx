@@ -3,11 +3,11 @@ import clsx from "clsx";
 import { useEffect, useState } from "react";
 import { api } from "~/utils/api";
 
-const OPTIONS = ["FullStack", "Mobile", "API", "Other"];
+const OPTIONS = ["MERN", "MEAN", "Other"];
 
-export default function PrimaryProfile() {
+export default function TechStack() {
   const [selected, setSelected] = useState<
-    "loading" | "FullStack" | "Mobile" | "API" | "Other"
+    "loading" | "MERN" | "MEAN"
   >("loading");
 
   const userData = api.user.get.useQuery();
@@ -19,7 +19,7 @@ export default function PrimaryProfile() {
     setSelected(option);
 
     const updatedUserData = await profileUpdateMutation.mutateAsync({
-      primaryProfile: option,
+      techStack: option,
     });
 
     if (updatedUserData) {
@@ -27,10 +27,10 @@ export default function PrimaryProfile() {
     }
   }
 
-  function fetchPrimaryProfile() {
+  function fetchTechStack() {
     if (userData) {
       // @ts-expect-error state typings not generated for primary profile option
-      setSelected(userData.data?.primaryProfile ?? "loading");
+      setSelected(userData.data?.techStack ?? "loading");
     }
   }
 
@@ -38,20 +38,18 @@ export default function PrimaryProfile() {
     if (userData.isFetching) return;
 
     if (userData.isFetched) {
-      fetchPrimaryProfile();
+      fetchTechStack();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userData]);
 
   return (
     <div className="flex w-full flex-col items-start gap-2">
-      <h1>Primary Profile</h1>
-      <div className="relative grid grid-cols-4 gap-2 rounded-lg border-8 border-[#908FAD]/30 px-2 py-2">
+      <h1>Tech Stack</h1>
+      <div className="w-full relative grid grid-cols-3 gap-2 rounded-lg border-8 border-[#908FAD]/30 px-2 py-2">
         <div
           className={clsx(
-            userData.isLoading || profileUpdateMutation.isLoading
-              ? "flex"
-              : "hidden",
+            (userData.isLoading || profileUpdateMutation.isLoading) ? "flex" : "hidden",
             "absolute bottom-0 left-0 right-0 top-0 bg-slate-900/80",
             "items-center justify-center"
           )}
