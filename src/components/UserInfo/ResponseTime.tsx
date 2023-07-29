@@ -27,10 +27,10 @@ export default function ResponseTime() {
     }
   }
 
-  function fetchPrimaryProfile() {
+  function fetchResponseTime() {
     if (userData) {
       // @ts-expect-error state typings not generated for primary profile option
-      setSelected(userData.data?.primaryProfile ?? "loading");
+      setSelected(userData.data?.responseTime ?? "loading");
     }
   }
 
@@ -38,7 +38,7 @@ export default function ResponseTime() {
     if (userData.isFetching) return;
 
     if (userData.isFetched) {
-      fetchPrimaryProfile();
+      fetchResponseTime();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userData]);
