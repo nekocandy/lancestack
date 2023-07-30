@@ -15,51 +15,63 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 };
 
 export default function Login() {
-  const router = useRouter()
+  const router = useRouter();
   const session = useSession();
 
   useEffect(() => {
-    if(session.status === "authenticated") {
-        return void router.push("/user-info")
+    if (session.status === "authenticated") {
+      return void router.push("/user-info");
     }
-  }, [router, session])
+  }, [router, session]);
 
   async function onAuthClicked() {
-    if(session.status === "unauthenticated") {
+    if (session.status === "unauthenticated") {
       await signIn("github");
     }
   }
 
-  return <LoginLayout>
-    <div className="bg-[#131621] flex flex-col gap-8 items-center border-2 border-[#BD60B7] px-10 py-8 rounded-xl bg-no-repeat bg-bottom bg-contain" style={{
-      backgroundImage: "url(/bg/card.png)"
-    }}>
-      <div>Welcome to WeLance!</div>
+  return (
+    <LoginLayout>
+      <div
+        className="flex flex-col items-center gap-8 rounded-xl border-2 border-[#BD60B7] bg-[#131621] bg-contain bg-bottom bg-no-repeat px-10 py-8"
+        style={{
+          backgroundImage: "url(/bg/card.png)",
+        }}
+      >
+        <div>Welcome to LanceStack!</div>
 
-    <div className="h-16 w-16 rounded-full bg-pink-300"></div>
+        <div
+          className="h-16 w-16 rounded-full bg-contain bg-center bg-no-repeat"
+          style={{
+            backgroundImage: "url(/logo.png)",
+          }}
+        ></div>
 
-      <div>
-        <button
-          onClick={() => void onAuthClicked()}
-        className="flex gap-4 items-center bg-[#242938] rounded-full pl-12 pr-1 py-1 border-2 border-[#BD60B7] text-sm justify-between">
-        <div></div>
-        {match(session)
-            .with({ status: "authenticated" }, () => (
-              <div>
-                <span>Hello {session.data!.user.name}</span>
-              </div>
-            ))
-            .with({ status: "unauthenticated" }, () => (
-                "Login with Github"
-            ))
-            .with({ status: "loading" }, () => "Loading")
-            .exhaustive()}
+        <div>
+          <button
+            onClick={() => void onAuthClicked()}
+            className="flex items-center justify-between gap-4 rounded-full border-2 border-[#BD60B7] bg-[#242938] py-1 pl-12 pr-1 text-sm"
+          >
+            <div></div>
+            {match(session)
+              .with({ status: "authenticated" }, () => (
+                <div>
+                  <span>Hello {session.data!.user.name}</span>
+                </div>
+              ))
+              .with({ status: "unauthenticated" }, () => "Login with Github")
+              .with({ status: "loading" }, () => "Loading")
+              .exhaustive()}
 
-            <div className="bg-[#05070E] rounded-full p-2">
-              <Icon className="text-white h-5 w-5" icon={"tabler:brand-github"} />
+            <div className="rounded-full bg-[#05070E] p-2">
+              <Icon
+                className="h-5 w-5 text-white"
+                icon={"tabler:brand-github"}
+              />
             </div>
-        </button>
+          </button>
         </div>
-    </div>
-  </LoginLayout>
+      </div>
+    </LoginLayout>
+  );
 }

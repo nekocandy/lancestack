@@ -10,7 +10,7 @@ export default function Ongoing() {
     <div className="flex flex-col gap-8">
       <h1 className="text-2xl font-bold underline">Ongoing</h1>
 
-      <div className="grid grid-cols-3">
+      <div className="grid grid-cols-3 gap-4">
         {match(myCommissions)
           .with({ status: "loading" }, () => <p>Loading...</p>)
           .with({ status: "error" }, () => <p>Error</p>)
