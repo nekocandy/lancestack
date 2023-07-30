@@ -56,7 +56,9 @@ export default function Sidebar() {
       }}
     >
       <Link href="/home">
-        <div className="h-14 w-14 rounded-full bg-green-400"></div>
+        <div className="h-14 w-14 rounded-full bg-center bg-contain bg-no-repeat" style={{
+          backgroundImage: "url(/logo.png)",
+        }}></div>
       </Link>
       {ROUTES.map((route) => (
         <Link
