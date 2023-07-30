@@ -47,6 +47,7 @@ model User {
     sessions      Session[]
     PlatformUser  PlatformUser?
     Enquiry       Enquiry[]
+    Project       Project[]
 }
 
 model VerificationToken {
@@ -66,19 +67,39 @@ model PlatformUser {
 
     user    User      @relation(fields: [userId], references: [id], onDelete: Cascade)
     Enquiry Enquiry[]
+    Project Project[]
 }
 
 model Enquiry {
-    id          String @id @default(cuid())
+    id          String  @id @default(cuid())
     lancerId    String
     userId      String
     whatToBuild String
     timeFrame   String
     budget      Int
+    accepted    Boolean @default(false)
 
-    lancer PlatformUser @relation(fields: [lancerId], references: [userId], onDelete: Cascade)
-    user   User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+    lancer  PlatformUser @relation(fields: [lancerId], references: [userId], onDelete: Cascade)
+    user    User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+    Project Project[]
 
+    @@index([lancerId])
+    @@index([userId])
+}
+
+model Project {
+    id        String @id @default(cuid())
+    userId    String
+    lancerId  String
+    enquiryId String
+    status    String
+    payment   String
+
+    enquiry Enquiry      @relation(fields: [enquiryId], references: [id], onDelete: Cascade)
+    user    User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+    lancer  PlatformUser @relation(fields: [lancerId], references: [userId], onDelete: Cascade)
+
+    @@index([enquiryId])
     @@index([lancerId])
     @@index([userId])
 }

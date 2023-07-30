@@ -55,7 +55,9 @@ export default function Sidebar() {
         background: "linear-gradient(135deg, #242938 0%, #635DAA 100%)",
       }}
     >
-      <div className="h-14 w-14 rounded-full bg-green-400"></div>
+      <Link href="/home">
+        <div className="h-14 w-14 rounded-full bg-green-400"></div>
+      </Link>
       {ROUTES.map((route) => (
         <Link
           key={route.path}
