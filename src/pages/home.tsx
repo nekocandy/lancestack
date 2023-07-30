@@ -1,5 +1,6 @@
 import { type GetServerSideProps } from "next";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 import { match } from "ts-pattern";
 import DetailsCard from "~/components/Home/DetailsCard";
 import { getServerAuthSession } from "~/server/auth";
@@ -21,6 +22,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 };
 
 export default function Home() {
+  const router = useRouter();
   const session = useSession();
 
   const availableLancers = api.user.getLancers.useQuery();
@@ -76,7 +78,10 @@ export default function Home() {
                         {lancer.user.name}
                       </div>
 
-                      <button className="rounded-full border-2 border-[#C57EFC] bg-[#242938] px-4 py-1 text-sm text-white">
+                      <button
+                        onClick={() => void router.push(`/enquire/${lancer.userId}`)}
+                        className="rounded-full border-2 border-[#C57EFC] bg-[#242938] px-4 py-1 text-sm text-white"
+                      >
                         Enquire
                       </button>
                     </div>
