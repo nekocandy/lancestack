@@ -23,8 +23,8 @@ const ROUTES: Route[] = [
     icon: "tabler:inbox",
   },
   {
-    name: "Responded Enquiries",
-    path: "/responded-enquiries",
+    name: "Ongoing Lancing",
+    path: "/ongoing",
     icon: "tabler:message-2-check",
   },
   {

@@ -86,4 +86,20 @@ export const lanceRouter = createTRPCRouter({
 
       return projectData;
     }),
+
+  myOngoingCommissions: protectedProcedure.query(async ({ ctx }) => {
+    const { id } = ctx.session.user;
+
+    const projects = await ctx.prisma.project.findMany({
+      where: {
+        userId: id,
+      },
+      include: {
+        lancer: true,
+        enquiry: true,
+      },
+    });
+
+    return projects;
+  }),
 });
