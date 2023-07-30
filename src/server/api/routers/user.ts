@@ -2,11 +2,34 @@ import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
 export const userRouter = createTRPCRouter({
+  getLancers: protectedProcedure.query(async ({ ctx }) => {
+    const users = await ctx.prisma.platformUser.findMany({
+      where: {
+        primaryProfile: {
+          not: null,
+        },
+        techStack: {
+          not: null,
+        },
+        responseTime: {
+          not: null,
+        },
+      },
+      include: {
+        user: true,
+      },
+    });
+
+    return users;
+  }),
+
   get: protectedProcedure
     .input(
-      z.object({
-        id: z.string().optional(),
-      }).optional()
+      z
+        .object({
+          id: z.string().optional(),
+        })
+        .optional()
     )
     .query(async ({ ctx, input }) => {
       let id: string;
