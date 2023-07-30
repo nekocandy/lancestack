@@ -61,20 +61,24 @@ export default function Home() {
             .with({ status: "success" }, ({ data }) =>
               data.map((lancer) => (
                 <div
-                  className="flex items-center gap-8 bg-[#131621] p-4 rounded-md"
+                  className="flex w-full items-center gap-8 rounded-md bg-[#131621] p-4"
                   key={lancer.userId}
                 >
-                  <div>
-                    <img
-                      className="h-20 w-20 rounded-full"
-                      src={lancer.user.image!}
-                      alt={`${lancer.user.name}'s PFP`}
-                    />
-                  </div>
+                  <img
+                    className="h-20 w-20 rounded-full"
+                    src={lancer.user.image!}
+                    alt={`${lancer.user.name}'s PFP`}
+                  />
 
-                  <div className="flex flex-col gap-4">
-                    <div className="w-fit rounded-full bg-[#908FAD] px-4 py-1 text-[#05070E]">
-                      {lancer.user.name}
+                  <div className="flex w-full flex-col gap-4">
+                    <div className="flex w-full items-center justify-between">
+                      <div className="w-fit rounded-full bg-[#908FAD] px-4 py-1 text-[#05070E]">
+                        {lancer.user.name}
+                      </div>
+
+                      <button className="rounded-full border-2 border-[#C57EFC] bg-[#242938] px-4 py-1 text-sm text-white">
+                        Enquire
+                      </button>
                     </div>
                     <div className="flex items-center gap-3">
                       <div className="w-fit rounded-md bg-[#242938] px-2 py-1 text-[#C57EFC]">
