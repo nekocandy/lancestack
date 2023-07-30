@@ -46,6 +46,7 @@ model User {
     accounts      Account[]
     sessions      Session[]
     PlatformUser  PlatformUser?
+    Enquiry       Enquiry[]
 }
 
 model VerificationToken {
@@ -63,5 +64,21 @@ model PlatformUser {
     techStack      String?
     responseTime   String?
 
-    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+    user    User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+    Enquiry Enquiry[]
+}
+
+model Enquiry {
+    id          String @id @default(cuid())
+    lancerId    String
+    userId      String
+    whatToBuild String
+    timeFrame   String
+    budget      Int
+
+    lancer PlatformUser @relation(fields: [lancerId], references: [userId], onDelete: Cascade)
+    user   User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@index([lancerId])
+    @@index([userId])
 }
