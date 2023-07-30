@@ -61,7 +61,7 @@ export default function Home() {
             .with({ status: "success" }, ({ data }) =>
               data.map((lancer) => (
                 <div
-                  className="flex items-center gap-8 bg-[#131621] p-6"
+                  className="flex items-center gap-8 bg-[#131621] p-4 rounded-md"
                   key={lancer.userId}
                 >
                   <div>
