@@ -10,9 +10,9 @@ import {
 
 export const schema = z.object({
   number: z.string(),
-  cvc: z.number(),
-  expMonth: z.number(),
-  expYear: z.number(),
+  cvv: z.string(),
+  expMonth: z.string(),
+  expYear: z.string(),
   billingDetails: z.object({
     name: z.string(),
     city: z.string(),
@@ -28,12 +28,13 @@ export const paymentsRouter = createTRPCRouter({
   createCard: protectedProcedure
     .input(schema)
     .mutation(async ({ ctx, input }) => {
-      const { number, cvc, expMonth, expYear, billingDetails, amount } = input;
+      const { number, cvv, expMonth, expYear, billingDetails, amount } = input;
 
       const encryptedMessage = await encryptCard({
         number,
-        cvc,
+        cvv,
       });
+
       const { keyId } = (await circle.encryption.getPublicKey()).data.data!;
       const metadata = {
         email: ctx.session.user.email!,
@@ -46,33 +47,38 @@ export const paymentsRouter = createTRPCRouter({
         encryptedData: encryptedMessage,
         billingDetails,
         keyId,
-        expMonth,
-        expYear,
+        expMonth: Number(expMonth),
+        expYear: Number(expYear),
         metadata,
       };
 
-      const cardId = (await circle.cards.createCard(cardDetails)).data.data!.id;
+      try {
+        const data = await circle.cards.createCard(cardDetails);
+        const cardId = data.data.data?.id;
 
-      const paymentDetails = {
-        idempotencyKey: v4(),
-        metadata: metadata,
-        amount: {
-          amount: amount.toString(),
-          currency: Currency.Usd,
-        },
-        autoCapture: true,
-        verification: PaymentCreationRequestVerificationEnum.Cvv,
-        source: {
-          id: cardId,
-          type: SourceTypeEnum.Card,
-        },
-        description: `Payment for Lancing Order`,
-      };
+        const paymentDetails = {
+          idempotencyKey: v4(),
+          metadata: metadata,
+          amount: {
+            amount: amount.toString(),
+            currency: Currency.Usd,
+          },
+          autoCapture: true,
+          verification: PaymentCreationRequestVerificationEnum.Cvv,
+          source: {
+            id: cardId,
+            type: SourceTypeEnum.Card,
+          },
+          description: `Payment for Lancing Order`,
+        };
 
-      const createPaymentResponse = await circle.payments.createPayment(
-        paymentDetails
-      );
+        const createPaymentResponse = await circle.payments.createPayment(
+          paymentDetails
+        );
 
-      return createPaymentResponse.data.data?.id;
+        return createPaymentResponse.data.data!;
+      } catch (error) {
+        console.log(error);
+      }
     }),
 });

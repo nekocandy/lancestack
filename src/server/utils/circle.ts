@@ -6,7 +6,7 @@ export const circle = new Circle(env.CIRCLE_KEY, CircleEnvironments.sandbox);
 
 interface IEncryptCardOptions {
   number: string;
-  cvc: number;
+  cvv: string;
 }
 
 export async function encryptCard(cardData: IEncryptCardOptions) {
@@ -26,8 +26,3 @@ export async function encryptCard(cardData: IEncryptCardOptions) {
 
   return encryptedMessage;
 }
-
-await encryptCard({
-  number: "4007400000000007",
-  cvc: 123,
-});
