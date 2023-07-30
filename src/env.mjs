@@ -15,6 +15,7 @@ export const env = createEnv({
     ),
     GITHUB_CLIENT_ID: z.string().min(1),
     GITHUB_CLIENT_SECRET: z.string().min(1),
+    CIRCLE_KEY: z.string().min(1),
   },
 
   client: {},
@@ -26,6 +27,7 @@ export const env = createEnv({
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
     GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,
     GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET,
+    CIRCLE_KEY: process.env.CIRCLE_KEY,
   },
 
   skipValidation: !!process.env.SKIP_ENV_VALIDATION,
