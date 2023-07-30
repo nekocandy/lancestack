@@ -1,14 +1,12 @@
-import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 import { useEffect } from "react";
 
 export default function Home() {
-  const session = useSession();
+  const router = useRouter();
 
   useEffect(() => {
-    console.log(session);
-  }, [session]);
+    void router.push("/home");
+  }, [router]);
 
-  return (
-    "Hello world"
-  );
+  return "Hello world";
 }
